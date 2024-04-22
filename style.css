@@ -1,0 +1,30 @@
+/*** Encabezado ******/
+header {
+    background-color: #000000;
+    color: white;
+    width: 100%;
+    display: flex;
+
+}
+
+header > img{
+    width: 35px;
+    height: 35px;
+    margin: 10px;
+    border: 2px solid red;
+    
+}
+
+header > h3 {
+    margin: 10px;
+    border: 2px solid red;
+}
+
+
+/******* Footer ******/
+footer {
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
