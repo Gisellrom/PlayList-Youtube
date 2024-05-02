@@ -66,6 +66,8 @@ header > h3 {
 
 /*Video*/
 .div-Video{
+    width: 100%;
+    height: 440px;
     border: 2px solid red;
     padding: 10px;
 }
@@ -75,8 +77,18 @@ header > h3 {
     height: 440px;
     border: 2px solid red;
     padding: 10px;
+    margin-bottom: 20px;
+}
+
+.contenidolista{
+    width: 95%;
+    height: 400px;
+    padding: 10px;
+    margin: 10px;
+    border: none;
     overflow: auto;
-    
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+
 }
 
 .cancion{
@@ -109,7 +121,7 @@ header > h3 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.alert > .text404{
+.alert > .notFound404{
     padding: 10px;
     margin: 10px 20px;
     width: 90%;
