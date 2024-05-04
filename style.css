@@ -91,8 +91,12 @@ header > h3 {
 
 }
 
+.contenidolista > a {
+    text-decoration: none;
+}
+
 .cancion{
-    
+    width: 90%;
     display: flex;
     padding: 5px;
     margin: 10px;
@@ -108,6 +112,8 @@ header > h3 {
     opacity: 0.7;
 }
 
+
+
 .cancion img{
     width: 70px;
     height: 70px;
@@ -115,6 +121,7 @@ header > h3 {
 }
 
 .info{
+    width: 80%;
     border: 2px solid red;
     padding: 10px;
     text-align: center;
