@@ -9,11 +9,13 @@ $(document).ready(function(){
     const videoPlayer = $("#videoFrame");
 
     const divNotFoundInputAlert = $("#divNotFoundInputAlert");
+    const divvideoPlaylist = $(".video-Playlist");
 
 
     //ESTADO INICIAL
     divEmptyInputAlert.hide(); //Escondido
     divNotFoundInputAlert.hide(); //escondido
+    divvideoPlaylist.hide(); //Escondido
 
 
     // URL del API de youtube      
@@ -36,9 +38,8 @@ $(document).ready(function(){
         if (playlistID == "") {
             console.log("estoy aqui");
             $(".ID-Empty").show(600); //muestra
-            //cards.hide(600); //esconde
-            //divinfoPlaylist.hide(600); //esconde
-            //divError.hide(600); //esconde
+            divvideoPlaylist.hide(600); //esconde
+            divNotFoundInputAlert.hide(600); //esconde
         } else {
             console.log("estoy acá");
             // Ocultamos mensajes de alerta si hay
@@ -60,8 +61,29 @@ $(document).ready(function(){
                 URL,
                 "playlistId="+playlistID+
                 "&maxResults=50&part=id,snippet&key="+APIKey,
-                cargaPlaylist
+                function (data){
+                    //vemos respuesta de invocación
+                    console.log(`datos de respuesta: ${data}`);
+                }
             )
+            //si la petición corresponde correctamente cargamos la playlist
+            .done(function (data, textStatus, xhr){
+                cargaPlaylist(data)
+            })
+            .fail(function (data, textStatus, xhr){
+                console.log("error", data.status);
+                console.log("STATUS: " + xhr);
+                if(data.status == 404) {
+                    errorPlaylist();
+                }
+            })
+
+        }
+
+        // Funcion callback de error
+        function errorPlaylist() {
+            divNotFoundInputAlert.show(600);
+            divEmptyInputAlert.hide(600);
         }
     });
     
@@ -74,6 +96,8 @@ $(document).ready(function(){
     {
        // Este mensaje aparece en la consola de desarrollo de JavaScript en el navegador
        //console.log("Encontré lista con "+playlist.items.length+" elementos");
+
+       divvideoPlaylist.show(600);
 
        //Mostramos el video
        playVideo(`${playlist.items[0].snippet.resourceId.videoId}`)
@@ -137,6 +161,14 @@ $(document).ready(function(){
 
     }//Fin de cargarPlaylist
 
+    function playVideo(videoId) {
+        console.log(`playvideo= ${videoId}`);
+        srcVideo = `https://www.youtube.com/embed/${videoId}?audioplay=1`;
+        $("#videoFrame").attr("src", srcVideo);
+        $("#videoFrame").show(1000);
+    
+    } 
+
     /*function playVideo(videoId){
         console.log(`playvideo= ${videoId}`);
         srcVideo = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
@@ -144,12 +176,4 @@ $(document).ready(function(){
         videoPlayer.show(1000);
     }//fin de playVideo
     */
-
-    function playVideo(videoId) {
-        console.log(`playvideo= ${videoId}`);
-        srcVideo = `https://www.youtube.com/embed/${videoId}?audioplay=1`;
-        videoPlayer.attr("src", srcVideo);
-        videoPlayer.show(1000);
-
-    } 
 });
