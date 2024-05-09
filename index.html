@@ -55,7 +55,7 @@
             <div class="">
                 <div class="row video-Playlist">
                     
-                    <div class="div-Video col-12 col-lg-6">
+                    <div class="div-Video col-12 col-lg-6">                       
                         <iframe 
                             src="https://www.youtube.com/embed/QUH_Sr_aFy4"
                             id="videoFrame"
@@ -66,9 +66,26 @@
                     </div>
                     
                     <div class="listaPlaylist col-12 col-lg-6" >
-                        <div class="contenidolista" id="contenido"></div>
+                        <div class="row">
+                            <div class="contenidolista" id="contenido">
+                                <div class="headerList">
+                                    <div class="col-md-10 col-10 align-self-center" >
+                                        <h4 id="titlePlaylist"></h4>
+                                    </div>
+                                    <div class="col-md-2 col-2 d-flex flex-column justify-content-center" style="margin-top: -10px;">
+                                        <a type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                                              </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
                 <div class="row divNotFound" id="divNotFoundInputAlert">
                     <div class="alert alert-danger " role="alert" width="150px">
                         
@@ -90,6 +107,38 @@
             </div>
         </section>
     </main>
+    <!-- Modal Info-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Detalles de playlist</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">Titulo:</div>
+                <div class="col-md-6"><p id="titlePlaylistModal"></p></div>
+                <div class="col-md-6">Descripción:</div>
+                <div class="col-md-6">
+                  <p id="descriptionPlaylist"></p>
+                </div>
+                <div class="col-md-6">Creador:</div>
+                <div class="col-md-6">
+                  <p id="creadorPlaylist"></p>
+                </div>
+                <div class="col-md-6">Fecha de creación:</div>
+                <div class="col-md-6">
+                  <p id="fechaPlaylist"></p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <footer class="fixed-bottom">
         Hecho por Gisell Noemi Soriano Romero  &#169 YouTubeList
     </footer>
