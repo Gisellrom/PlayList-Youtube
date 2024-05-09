@@ -77,12 +77,15 @@ $(document).ready(function(){
             )
             //si la petición corresponde correctamente cargamos la playlist
             .done(function (data, textStatus, xhr){
+                $("#contenido").empty()
                 cargaPlaylist(data, playlistID)
             })
             .fail(function (data, textStatus, xhr){
+                
                 console.log("error", data.status);
                 console.log("STATUS: " + xhr);
                 if(data.status == 404) {
+                    $("#contenido").empty()
                     errorPlaylist();
                 }
             })
