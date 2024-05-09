@@ -11,6 +11,12 @@ $(document).ready(function(){
     const divNotFoundInputAlert = $("#divNotFoundInputAlert");
     const divvideoPlaylist = $(".video-Playlist");
 
+    const tituloPlaylist = $("#titlePlaylist");
+    const titutloPlaylistModal = $("#titlePlaylistModal");
+    const descripcionPlaylist = $("#descriptionPlaylist");
+    const creadorPlaylist = $("#creadorPlaylist");
+    const fechaPlaylist = $("#fechaPlaylist");
+
 
     //ESTADO INICIAL
     divEmptyInputAlert.hide(); //Escondido
@@ -20,9 +26,11 @@ $(document).ready(function(){
 
     // URL del API de youtube      
     var URL="https://content.googleapis.com/youtube/v3/playlistItems";
+    var URLPlaylist = "https://www.googleapis.com/youtube/v3/playlists";
     
     // Llave obtenida de google
     var APIKey = "AIzaSyDle5PgKTTCZSPvHYOsPRz0_YWJlHMNm4s";
+    //var APIKey = "AIzaSyCQrnmj_iJQQBKXyTetR-nIl0vgdI_9Z80";
 
     
     
@@ -44,6 +52,7 @@ $(document).ready(function(){
             console.log("estoy acá");
             // Ocultamos mensajes de alerta si hay
             $(".ID-Empty").hide(600); //esconde
+            divNotFoundInputAlert.hide(600);
             //Invocación AJAX
             /* $.get(
                 URL,
@@ -68,7 +77,7 @@ $(document).ready(function(){
             )
             //si la petición corresponde correctamente cargamos la playlist
             .done(function (data, textStatus, xhr){
-                cargaPlaylist(data)
+                cargaPlaylist(data, playlistID)
             })
             .fail(function (data, textStatus, xhr){
                 console.log("error", data.status);
@@ -79,28 +88,44 @@ $(document).ready(function(){
             })
 
         }
-
-        // Funcion callback de error
-        function errorPlaylist() {
-            divNotFoundInputAlert.show(600);
-            divEmptyInputAlert.hide(600);
-        }
     });
+
+    // Funcion callback de error
+    function errorPlaylist() {
+        divNotFoundInputAlert.show(600);
+        divEmptyInputAlert.hide(600);
+        divvideoPlaylist.hide(600); //esconde
+    }
     
     /*******************************************************
      * Funcion para cargar la Playlist:
      * // Callback. Playlist es un objeto que contiene otros objetos que son las entradas de la lista
      ******************************************************/
     
-    function cargaPlaylist(playlist)
+    function cargaPlaylist(playlist, playlistID)
     {
        // Este mensaje aparece en la consola de desarrollo de JavaScript en el navegador
        //console.log("Encontré lista con "+playlist.items.length+" elementos");
 
        divvideoPlaylist.show(600);
 
+       tituloPlaylist.empty();
+       descripcionPlaylist.empty();
+       titutloPlaylistModal.empty();
+       creadorPlaylist.empty();
+       fechaPlaylist.empty();
+       //divContenido.empty();
+
+       // Hacemos una segunda invocacion AJAX para obtener los datos de la playlist, como descripcion, creador y fecha de creación.
+       $.get(
+        URLPlaylist,
+        "id="+playlistID +
+        "&maxResults=50&part=id,snippet&key="+APIKey,
+        cargaDatosPlaylist
+        );
+
        //Mostramos el video
-       playVideo(`${playlist.items[0].snippet.resourceId.videoId}`)
+       playVideo(`${playlist.items[0].snippet.resourceId.videoId}`);
 
        // Crea una lista
        $("#contenido").append($(`<ul>`));
@@ -163,7 +188,7 @@ $(document).ready(function(){
 
     function playVideo(videoId) {
         console.log(`playvideo= ${videoId}`);
-        srcVideo = `https://www.youtube.com/embed/${videoId}?audioplay=1`;
+        srcVideo = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
         $("#videoFrame").attr("src", srcVideo);
         $("#videoFrame").show(1000);
     
@@ -176,4 +201,16 @@ $(document).ready(function(){
         videoPlayer.show(1000);
     }//fin de playVideo
     */
+    function cargaDatosPlaylist(playlist) {
+        console.log(playlist.items[0]);
+        var title = playlist.items[0].snippet.title;
+        var description = playlist.items[0].snippet.description;
+        var fecha = playlist.items[0].snippet.publishedAt;
+        var creador = playlist.items[0].snippet.channelTitle;
+        tituloPlaylist.append(title);
+        titutloPlaylistModal.append(title);
+        descripcionPlaylist.append(description);
+        creadorPlaylist.append(creador);
+        fechaPlaylist.append(fecha);
+      }
 });
