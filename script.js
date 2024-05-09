@@ -124,7 +124,7 @@ $(document).ready(function(){
         cargaDatosPlaylist
         );
 
-       //Mostramos el video
+       //Mostramos el primer video
        playVideo(`${playlist.items[0].snippet.resourceId.videoId}`);
 
        // Crea una lista
@@ -133,10 +133,35 @@ $(document).ready(function(){
         var i;
                             
         for (i=0;i<playlist.items.length;i++) {
+            console.log("i=" + i);
             var element = playlist.items[i];
-
-            if(element.snippet.title != "Deleted video"){
-
+            console.log("element.videoid"+ element.snippet.resourceId.videoId);
+            if (element.snippet.title != "Deleted video") {
+                (function (element) { // Closure para capturar el valor de element
+                    $("#contenido").append(
+                        $("<li>").on("click", function () {
+                            console.log("click.videoid"+ element.snippet.resourceId.videoId);
+                            playVideo(element.snippet.resourceId.videoId);
+                        }).css("list-style-type", "none").append(
+                            $("<a>").append(
+                                $("<div>").addClass("cancion").append(
+                                    $("<div>").addClass("div-img").append(
+                                        $("<img>").attr({
+                                            src: element.snippet.thumbnails.default.url,
+                                            width: element.snippet.thumbnails.default.width,
+                                            height: element.snippet.thumbnails.default.height
+                                        })
+                                    ),
+                                    $("<div>").addClass("info").append(
+                                        $("<h6>").text(element.snippet.title),
+                                        $("<p>").text(element.snippet.channelTitle)
+                                    )
+                                )
+                            )
+                        )
+                    );
+                })(element); // Pasar element al closure 
+                
                 //$("#contenido").append(
                 //    $(`<li><a href="https://www.youtube.com/embed/"${element.snippet.resourceId.videoId}>${element.snippet.title}</a></li>`)
                 //);
@@ -159,29 +184,9 @@ $(document).ready(function(){
                     </li>`)
                 );*/
 
-                $("#contenido").append(
-                    $("<li>").on("click", function() {
-                        playVideo(element.snippet.resourceId.videoId);
-                    }).css("list-style-type", "none").append(
-                        $("<a>").append(
-                            $("<div>").addClass("cancion").append(
-                                $("<div>").addClass("div-img").append(
-                                    $("<img>").attr({
-                                        src: element.snippet.thumbnails.default.url,
-                                        width: element.snippet.thumbnails.default.width,
-                                        height: element.snippet.thumbnails.default.height
-                                    })
-                                ),
-                                $("<div>").addClass("info").append(
-                                    $("<h6>").text(element.snippet.title),
-                                    $("<p>").text(element.snippet.channelTitle)
-                                )
-                            )
-                        )
-                    )
-                );                
+                             
             }//fin del if
-        }
+        }//finn del for
         $("#contenido").append($("</ul>"));
 
     }//Fin de cargarPlaylist
