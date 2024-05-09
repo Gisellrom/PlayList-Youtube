@@ -1,3 +1,21 @@
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(45deg,#922D50,#C42348,#A6808C,#D6CFCB);
+    background-size: 400% 400%;
+    position: relative;
+    animation: cambiar 10s ease infinite;
+}
+  /* Propiedades para temas */
+
+@keyframes cambiar{
+    0%{background-position: 0 50%;}
+    50%{background-position: 100% 50%;}
+    100%{background-position: 0 50%;}
+}
+
+
 /*** Encabezado ******/
 header {
     background-color: #000000;
@@ -81,6 +99,7 @@ header > h3 {
     border: none;
     overflow: auto;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: white;
 
 }
 
@@ -126,6 +145,10 @@ header > h3 {
     padding: 10px;
     margin: 10px 20px;
     width: 90%;
+}
+
+.headerList{
+    display: flex;
 }
 
 
